@@ -21,24 +21,37 @@ struct MainScreen: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-
-            }
-            .navigationTitle("라이브러리")
-            .onAppear {
-                viewModel.action(.load)
-            }
+            scrollView
+                .navigationTitle("라이브러리")
+                .onAppear(perform: load)
         }
     }
 }
 
 // MARK: - Function
 extension MainScreen {
-
-
+    func load() {
+        viewModel.action(.load)
+    }
 }
 
 // MARK: - UI
 extension MainScreen {
+    var scrollView: some View {
+        ScrollView {
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible()), count: 2),
+                spacing: 16
+            ) {
+                ForEach(viewModel.albums) {
+                    albumCard($0)
+                }
+            }
+            .padding()
+        }
+    }
 
+    func albumCard(_ album: Album) -> some View {
+        AlbumCard(album: album)
+    }
 }

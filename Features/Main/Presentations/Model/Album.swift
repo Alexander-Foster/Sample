@@ -9,7 +9,7 @@ import Foundation
 
 import Domain
 
-public struct Album {
+public struct Album: Identifiable {
     public let id: String
     public let artworkURL: URL?
     public let title: String
