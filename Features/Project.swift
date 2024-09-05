@@ -10,6 +10,8 @@ let project = Project.staticLibrary(
         .feature(ui: .main),
         .feature(interface: .main),
         .feature(ui: .detail),
-        .feature(interface: .detail)
+        .feature(interface: .detail),
+        .feature(ui: .musicPlayer),
+        .feature(interface: .musicPlayer)
     ]
 )

@@ -13,6 +13,8 @@ import MainInterface
 import MainUI
 import DetailInterface
 import DetailUI
+import MusicPlayerInterface
+import MusicPlayerUI
 
 
 public protocol FeatureDependency: Dependency {
@@ -22,6 +24,7 @@ public protocol FeatureDependency: Dependency {
 public protocol FeatureBuilder {
     var mainBuilder: MainBuilder { get }
     var detailBuilder: DetailBuilder { get }
+    var musicPlayerBuilder: MusicPlayerBuilder { get }
 }
 
 public final class FeatureComponent: Component<FeatureDependency>, FeatureBuilder {
@@ -32,5 +35,9 @@ public final class FeatureComponent: Component<FeatureDependency>, FeatureBuilde
 
     public var detailBuilder: DetailBuilder {
         DetailComponent(parent: self)
+    }
+
+    public var musicPlayerBuilder: MusicPlayerBuilder {
+        MusicPlayerComponent(parent: self)
     }
 }

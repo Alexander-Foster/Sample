@@ -8,6 +8,7 @@ let project = Project.staticLibrary(
     deploymentTargets: .iOS("16.0"),
     dependencies: [
         .core(.designSystem),
-        .core(.network)
+        .core(.network),
+        .core(.musicPlayControl)
     ]
 )

@@ -11,4 +11,5 @@ import Foundation
 public enum FeatureModule: String, CaseIterable {
     case main = "Main"
     case detail = "Detail"
+    case musicPlayer = "MusicPlayer"
 }

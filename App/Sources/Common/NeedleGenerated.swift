@@ -12,6 +12,9 @@ import Foundation
 import MainInterface
 import MainPresentation
 import MainUI
+import MusicPlayerInterface
+import MusicPlayerPresentation
+import MusicPlayerUI
 import NeedleFoundation
 import Remote
 import SwiftUI
@@ -70,6 +73,19 @@ private class RemoteDataSourceDependency523c5d4171d86e4232c5Provider: RemoteData
 /// ^->RootComponent->RemoteDataSourceComponent
 private func factory36859833a5a11b182947e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
     return RemoteDataSourceDependency523c5d4171d86e4232c5Provider()
+}
+private class MusicPlayerDependency5d355df74c2c77076d06Provider: MusicPlayerDependency {
+    var useCaseBuilder: UseCaseBuilder {
+        return rootComponent.useCaseBuilder
+    }
+    private let rootComponent: RootComponent
+    init(rootComponent: RootComponent) {
+        self.rootComponent = rootComponent
+    }
+}
+/// ^->RootComponent->FeatureComponent->MusicPlayerComponent
+private func factory6085486a0c3269673fcea9403e3301bb54f80df0(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MusicPlayerDependency5d355df74c2c77076d06Provider(rootComponent: parent2(component) as! RootComponent)
 }
 private class DetailDependencycfccc6228b3f07aedab8Provider: DetailDependency {
     var useCaseBuilder: UseCaseBuilder {
@@ -147,6 +163,11 @@ extension RemoteDataSourceComponent: Registration {
 
     }
 }
+extension MusicPlayerComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\MusicPlayerDependency.useCaseBuilder] = "useCaseBuilder-UseCaseBuilder"
+    }
+}
 extension DetailComponent: Registration {
     public func registerItems() {
         keyPathToName[\DetailDependency.useCaseBuilder] = "useCaseBuilder-UseCaseBuilder"
@@ -157,6 +178,7 @@ extension FeatureComponent: Registration {
 
         localTable["mainBuilder-MainBuilder"] = { [unowned self] in self.mainBuilder as Any }
         localTable["detailBuilder-DetailBuilder"] = { [unowned self] in self.detailBuilder as Any }
+        localTable["musicPlayerBuilder-MusicPlayerBuilder"] = { [unowned self] in self.musicPlayerBuilder as Any }
     }
 }
 extension MainComponent: Registration {
@@ -190,6 +212,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->RootComponent->RepositoryComponent", factory89fed910da85ca3e434eb3a8f24c1d289f2c0f2e)
     registerProviderFactory("^->RootComponent->UseCaseComponent", factory53509956f256115531dcb3a8f24c1d289f2c0f2e)
     registerProviderFactory("^->RootComponent->RemoteDataSourceComponent", factory36859833a5a11b182947e3b0c44298fc1c149afb)
+    registerProviderFactory("^->RootComponent->FeatureComponent->MusicPlayerComponent", factory6085486a0c3269673fcea9403e3301bb54f80df0)
     registerProviderFactory("^->RootComponent->FeatureComponent->DetailComponent", factory773e09ebe6a223ed54c6a9403e3301bb54f80df0)
     registerProviderFactory("^->RootComponent->FeatureComponent", factory740cea5182beb7a7ebb5e3b0c44298fc1c149afb)
     registerProviderFactory("^->RootComponent->FeatureComponent->MainComponent", factory36ae39c5ea75610257f1f4413772880be0d08723)

@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+import MusicPlayControl
 import NeedleFoundation
 
 
 @main
 struct MainApp: App {
+    @StateObject var playerManager = MusicPlayerManager()
 
     let rootComponent: RootComponent
 
@@ -22,7 +24,15 @@ struct MainApp: App {
 
     var body: some Scene {
         WindowGroup {
-            rootComponent.rootView
+            ZStack {
+                rootComponent.rootView
+
+                VStack {
+                    Spacer()
+                    rootComponent.featureBuilder.musicPlayerBuilder.view()
+                }
+            }
+            .environmentObject(playerManager)
         }
     }
 }

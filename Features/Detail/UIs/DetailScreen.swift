@@ -9,8 +9,10 @@ import SwiftUI
 
 import DetailPresentation
 import DesignSystem
+import MusicPlayControl
 
 struct DetailScreen: View {
+    @EnvironmentObject var playerManager: MusicPlayerManager
     @StateObject private var viewModel: DetailViewModel
 
     init(

@@ -11,4 +11,5 @@ import Foundation
 public enum CoreModule: String, CaseIterable {
     case network = "CoreNetwork"
     case designSystem = "DesignSystem"
+    case musicPlayControl = "MusicPlayControl"
 }
