@@ -8,15 +8,20 @@
 import SwiftUI
 
 import MainPresentation
+import DetailInterface
 import DesignSystem
 
 struct MainScreen: View {
     @StateObject private var viewModel: MainViewModel
 
+    private let detailBuilder: DetailBuilder
+
     init(
-        viewModel: MainViewModel
+        viewModel: MainViewModel,
+        detailBuilder: DetailBuilder
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
+        self.detailBuilder = detailBuilder
     }
 
     var body: some View {
@@ -52,6 +57,8 @@ extension MainScreen {
     }
 
     func albumCard(_ album: Album) -> some View {
-        AlbumCard(album: album)
+        NavigationLink(destination: { detailBuilder.view() }) {
+            AlbumCard(album: album)
+        }
     }
 }

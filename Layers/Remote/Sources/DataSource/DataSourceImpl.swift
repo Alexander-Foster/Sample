@@ -10,8 +10,10 @@ import MusicKit
 
 import Data
 
-struct MusicDataSourceImpl: MusicDataSource {
-    var isAuthorized: Bool {
+actor MusicDataSourceImpl: MusicDataSource {
+    private var albums: MusicItemCollection<Album> = .init([])
+
+    nonisolated var isAuthorized: Bool {
         MusicAuthorization.currentStatus == .authorized
     }
 
@@ -21,6 +23,8 @@ struct MusicDataSourceImpl: MusicDataSource {
 
     func fetchAllAlbums() async throws -> [MusicAlbumEntity] {
         let request = MusicLibraryRequest<Album>()
-        return try await request.response().items.map(\.entity)
+        let albums = try await request.response().items
+        self.albums = albums
+        return albums.map(\.entity)
     }
 }

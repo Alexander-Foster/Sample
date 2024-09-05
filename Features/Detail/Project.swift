@@ -4,10 +4,8 @@ import ProjectDescriptionHelpers
 
 
 let project = Project.feature(
-    name: FeatureModule.main.rawValue,
+    name: FeatureModule.detail.rawValue,
     uiDependencies: [
-        .core(.designSystem),
-
-        .feature(interface: .detail)
+        .core(.designSystem)
     ]
 )

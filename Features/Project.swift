@@ -8,6 +8,8 @@ let project = Project.staticLibrary(
     deploymentTargets: .iOS("16.0"),
     dependencies: [
         .feature(ui: .main),
-        .feature(interface: .main)
+        .feature(interface: .main),
+        .feature(ui: .detail),
+        .feature(interface: .detail)
     ]
 )

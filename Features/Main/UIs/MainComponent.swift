@@ -16,6 +16,7 @@ import Domain
 
 public protocol MainDependency: Dependency {
     var useCaseBuilder: UseCaseBuilder { get }
+    var detailBuilder: DetailBuilder { get }
 }
 
 public final class MainComponent: Component<MainDependency>, MainBuilder {
@@ -23,7 +24,6 @@ public final class MainComponent: Component<MainDependency>, MainBuilder {
     struct Component: MainViewModelDependency {
         var getAllAlbumUseCase: GetAllAlbumUseCase
     }
-
 
     @MainActor
     public func view() -> AnyView {
@@ -33,7 +33,8 @@ public final class MainComponent: Component<MainDependency>, MainBuilder {
                     dependency: Component(
                         getAllAlbumUseCase: dependency.useCaseBuilder.getAllAlbumUseCase
                     )
-                )
+                ),
+                detailBuilder: dependency.detailBuilder
             )
         )
     }

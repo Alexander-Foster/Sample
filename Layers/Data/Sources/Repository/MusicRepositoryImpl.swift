@@ -9,7 +9,7 @@ import Foundation
 
 import Domain
 
-struct MusicRepositoryImpl: MusicRepository {
+actor MusicRepositoryImpl: MusicRepository {
 
     private let dataSource: MusicDataSource
 

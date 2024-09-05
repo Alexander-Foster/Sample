@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GetAllAlbumUseCase {
+public actor GetAllAlbumUseCase {
 
     private let repository: MusicRepository
 
