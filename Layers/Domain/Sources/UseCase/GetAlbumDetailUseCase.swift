@@ -18,7 +18,7 @@ public actor GetAlbumDetailUseCase {
         self.repository = repository
     }
 
-    public func callAsFunction(with id: String) async -> (MusicAlbum, [MusicTrack])? {
-        await repository.albumDetail(by: id)
+    public func callAsFunction(with id: String) async throws -> (MusicAlbum, [MusicTrack])? {
+        try await repository.albumDetail(by: id)
     }
 }

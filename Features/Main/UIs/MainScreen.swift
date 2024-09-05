@@ -56,7 +56,7 @@ extension MainScreen {
         }
     }
 
-    func albumCard(_ album: Album) -> some View {
+    func albumCard(_ album: MainPresentation.Album) -> some View {
         NavigationLink(destination: { detailBuilder.view(albumId: album.id) }) {
             AlbumCard(album: album)
         }

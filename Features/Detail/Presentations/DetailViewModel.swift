@@ -45,7 +45,9 @@ public extension DetailViewModel {
 
 // MARK: - Public variable
 public extension DetailViewModel {
-
+    var title: String {
+        album?.title ?? ""
+    }
 }
 
 // MARK: - Private function
@@ -53,9 +55,13 @@ private extension DetailViewModel {
     @MainActor
     func load() {
         Task {
-            guard let (album, tracks) = await dependency.getAlbumDetailUseCase(with: dependency.albumId) else { return }
-            self.album = album.presentation
-            self.tracks = tracks.map(\.presentation)
+            do {
+                guard let (album, tracks) = try await dependency.getAlbumDetailUseCase(with: dependency.albumId) else { return }
+                self.album = album.presentation
+                self.tracks = tracks.map(\.presentation)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }
