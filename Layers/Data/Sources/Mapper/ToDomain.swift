@@ -15,3 +15,9 @@ extension MusicAlbumEntity {
         .init(id: id, artworkURL: artworkURL, title: title, artistName: artistName)
     }
 }
+
+extension MusicTrackEntity {
+    var domain: MusicTrack {
+        .init(id: id, number: number, title: title)
+    }
+}

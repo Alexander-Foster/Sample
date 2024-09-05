@@ -21,3 +21,13 @@ extension Album {
         )
     }
 }
+
+extension Track {
+    var entity: MusicTrackEntity {
+        .init(
+            id: id.rawValue,
+            number: trackNumber,
+            title: title
+        )
+    }
+}

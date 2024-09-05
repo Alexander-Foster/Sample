@@ -11,10 +11,15 @@ import Combine
 import Domain
 
 public protocol DetailViewModelDependency {
+    var albumId: String { get }
+    var getAlbumDetailUseCase: GetAlbumDetailUseCase { get }
 }
 
 
 public final class DetailViewModel: ObservableObject {
+
+    @Published public private(set) var album: Album?
+    @Published public private(set) var tracks: [Track] = []
 
     private let dependency: DetailViewModelDependency
 
@@ -23,7 +28,7 @@ public final class DetailViewModel: ObservableObject {
     }
 
     public enum Action {
-
+        case load
     }
 }
 
@@ -32,7 +37,8 @@ public extension DetailViewModel {
     @MainActor
     func action(_ action: Action) {
         switch action {
-
+        case .load:
+            load()
         }
     }
 }
@@ -44,5 +50,12 @@ public extension DetailViewModel {
 
 // MARK: - Private function
 private extension DetailViewModel {
-
+    @MainActor
+    func load() {
+        Task {
+            guard let (album, tracks) = await dependency.getAlbumDetailUseCase(with: dependency.albumId) else { return }
+            self.album = album.presentation
+            self.tracks = tracks.map(\.presentation)
+        }
+    }
 }

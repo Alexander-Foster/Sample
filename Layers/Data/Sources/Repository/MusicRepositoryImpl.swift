@@ -25,4 +25,10 @@ actor MusicRepositoryImpl: MusicRepository {
     func fetchAllAlbums() async throws -> [MusicAlbum] {
         try await dataSource.fetchAllAlbums().map(\.domain)
     }
+
+    func albumDetail(by id: String) async -> (MusicAlbum, [MusicTrack])? {
+        await dataSource.albumDetail(by: id).map {
+            ($0.0.domain, $0.1.map(\.domain))
+        }
+    }
 }

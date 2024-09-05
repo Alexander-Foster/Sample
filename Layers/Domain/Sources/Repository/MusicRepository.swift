@@ -11,4 +11,5 @@ import Foundation
 public protocol MusicRepository {
     func requestAppleMusicAccess() async -> Bool
     func fetchAllAlbums() async throws -> [MusicAlbum]
+    func albumDetail(by id: String) async -> (MusicAlbum, [MusicTrack])?
 }

@@ -22,6 +22,9 @@ struct DetailScreen: View {
     var body: some View {
         Text("Detail")
             .navigationTitle("라이브러리")
+            .onAppear {
+                viewModel.action(.load)
+            }
     }
 }
 

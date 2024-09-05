@@ -27,4 +27,9 @@ actor MusicDataSourceImpl: MusicDataSource {
         self.albums = albums
         return albums.map(\.entity)
     }
+
+    func albumDetail(by id: String) async -> (MusicAlbumEntity, [MusicTrackEntity])? {
+        guard let album = albums.first(where: { $0.id.rawValue == id }) else { return nil }
+        return (album.entity, album.tracks?.map(\.entity) ?? [])
+    }
 }

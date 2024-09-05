@@ -20,17 +20,19 @@ public protocol DetailDependency: Dependency {
 public final class DetailComponent: Component<DetailDependency>, DetailBuilder {
 
     struct Component: DetailViewModelDependency {
-
+        var albumId: String
+        var getAlbumDetailUseCase: GetAlbumDetailUseCase
     }
 
 
     @MainActor
-    public func view() -> AnyView {
+    public func view(albumId: String) -> AnyView {
         AnyView(
             DetailScreen(
                 viewModel: DetailViewModel(
                     dependency: Component(
-
+                        albumId: albumId,
+                        getAlbumDetailUseCase: dependency.useCaseBuilder.getAlbumDetailUseCase
                     )
                 )
             )

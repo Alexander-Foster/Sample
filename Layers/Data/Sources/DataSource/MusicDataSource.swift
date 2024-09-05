@@ -12,4 +12,5 @@ public protocol MusicDataSource {
     var isAuthorized: Bool { get }
     func requestAppleMusicAccess() async -> Bool
     func fetchAllAlbums() async throws -> [MusicAlbumEntity]
+    func albumDetail(by id: String) async -> (MusicAlbumEntity, [MusicTrackEntity])?
 }
