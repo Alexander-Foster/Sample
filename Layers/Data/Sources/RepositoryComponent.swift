@@ -20,7 +20,7 @@ public class RepositoryComponent: Component<RepositoryDependency>, RepositoryBui
     
     public var repository: Repository {
         shared {
-            RepositoryImpl(dataSource: dependency.remoteDataSourceBuilder.dataSource)
+            RepositoryImpl(dataSource: dependency.remoteDataSourceBuilder.musicDataSource)
         }
     }
 }

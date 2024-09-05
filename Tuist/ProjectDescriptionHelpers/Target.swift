@@ -21,7 +21,7 @@ public extension Target {
             destinations: [.iPhone],
             product: .app,
             bundleId: "${PRODUCT_BUNDLE_IDENTIFIER}",
-            deploymentTargets: .iOS("15.0"),
+            deploymentTargets: .iOS("16.0"),
             infoPlist: infoPlist,
             sources: [
                 "Sources/iOS/**",

@@ -15,7 +15,7 @@ public extension Project {
         product: Product = .staticLibrary,
         baseSettings: SettingsDictionary = [:],
         destinations: Destinations = [.iPhone],
-        deploymentTargets: DeploymentTargets = .iOS("15.0"),
+        deploymentTargets: DeploymentTargets = .iOS("16.0"),
         entitlements: Entitlements? = nil,
         dependencies: [TargetDependency] = []
     ) -> Self {

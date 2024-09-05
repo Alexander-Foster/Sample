@@ -17,9 +17,9 @@ public protocol RemoteDataSourceDependency: Dependency {
 
 public class RemoteDataSourceComponent: Component<RemoteDataSourceDependency>, RemoteDataSourceBuilder {
     
-    public var dataSource: DataSource {
+    public var musicDataSource: MusicDataSource {
         shared {
-            DataSourceImpl()
+            MusicDataSourceImpl()
         }
     }
 }

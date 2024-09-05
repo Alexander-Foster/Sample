@@ -8,6 +8,8 @@
 import Foundation
 
 
-public protocol DataSource {
-
+public protocol MusicDataSource {
+    var isAuthorized: Bool { get }
+    func requestAppleMusicAccess() async -> Bool
+    func fetchAllAlbums() async throws -> [MusicAlbumEntity]
 }

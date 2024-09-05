@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import MusicKit
 
-import DetailInterface
 import MainPresentation
 import DesignSystem
 
 struct MainScreen: View {
+    @State private var musicAuthStatus = MusicAuthorization.Status.notDetermined
+    @State private var songs: [Album] = []
 
     @StateObject private var viewModel: MainViewModel
 
@@ -26,6 +28,7 @@ struct MainScreen: View {
             VStack {
 
             }
+            .navigationTitle("라이브러리")
         }
     }
 }
@@ -33,9 +36,10 @@ struct MainScreen: View {
 // MARK: - Function
 extension MainScreen {
 
+
 }
 
 // MARK: - UI
 extension MainScreen {
-    
+
 }

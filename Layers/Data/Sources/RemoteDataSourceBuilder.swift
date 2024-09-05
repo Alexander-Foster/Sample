@@ -9,5 +9,5 @@ import Foundation
 
 
 public protocol RemoteDataSourceBuilder {
-    var dataSource: DataSource { get }
+    var musicDataSource: MusicDataSource { get }
 }

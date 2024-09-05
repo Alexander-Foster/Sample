@@ -12,6 +12,7 @@ let project = Project.layer(
     name: LayerModule.remote.rawValue,
     dependencies: [
         .core(.network),
-        .layer(.data)
+        .layer(.data),
+        .sdk(name: "MusicKit", type: .framework, status: .required)
     ]
 )

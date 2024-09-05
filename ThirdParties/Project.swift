@@ -11,7 +11,7 @@ import ProjectDescriptionHelpers
 
 let project = Project.staticLibrary(
     name: "ThirdParties",
-    deploymentTargets: .iOS("15.0"),
+    deploymentTargets: .iOS("16.0"),
     dependencies: [
     ]
 )

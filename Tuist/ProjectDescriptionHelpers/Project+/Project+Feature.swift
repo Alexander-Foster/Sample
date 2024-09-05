@@ -15,7 +15,7 @@ public extension Project {
         name: String,
         baseSettings: SettingsDictionary = [:],
         destinations: Destinations = [.iPhone],
-        deploymentTargets: DeploymentTargets = .iOS("15.0"),
+        deploymentTargets: DeploymentTargets = .iOS("16.0"),
         interfaceDependencies: [TargetDependency] = [],
         uiDependencies: [TargetDependency] = [],
         presentationDependencies: [TargetDependency] = [],

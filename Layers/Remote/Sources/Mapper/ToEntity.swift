@@ -6,5 +6,18 @@
 //
 
 import Foundation
+import MusicKit
+
 import Data
 
+
+extension Album {
+    var entity: MusicAlbumEntity {
+        .init(
+            id: id.rawValue,
+            artworkURL: artwork?.url(width: 500, height: 500),
+            title: title,
+            artistName: artistName
+        )
+    }
+}

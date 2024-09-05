@@ -12,9 +12,9 @@ import Domain
 struct RepositoryImpl: Repository {
 
 
-    private let dataSource: DataSource
+    private let dataSource: MusicDataSource
 
-    init(dataSource: DataSource) {
+    init(dataSource: MusicDataSource) {
         self.dataSource = dataSource
     }
 }
