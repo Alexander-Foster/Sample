@@ -15,14 +15,14 @@ public protocol UseCaseDependency: Dependency {
 }
 
 public protocol UseCaseBuilder {
-    var useCase: UseCase { get }
+    var getAllAlbumUseCase: GetAllAlbumUseCase { get }
 }
 
 public class UseCaseComponent: Component<UseCaseDependency>, UseCaseBuilder {
 
-    public var useCase: UseCase {
+    public var getAllAlbumUseCase: GetAllAlbumUseCase {
         shared {
-            UseCase(repository: dependency.repositoryBuilder.repository)
+            GetAllAlbumUseCase(repository: dependency.repositoryBuilder.musicRepository)
         }
     }
 }

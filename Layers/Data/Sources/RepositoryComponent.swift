@@ -18,9 +18,9 @@ public protocol RepositoryDependency: Dependency {
 
 public class RepositoryComponent: Component<RepositoryDependency>, RepositoryBuilder {
     
-    public var repository: Repository {
+    public var musicRepository: MusicRepository {
         shared {
-            RepositoryImpl(dataSource: dependency.remoteDataSourceBuilder.musicDataSource)
+            MusicRepositoryImpl(dataSource: dependency.remoteDataSourceBuilder.musicDataSource)
         }
     }
 }

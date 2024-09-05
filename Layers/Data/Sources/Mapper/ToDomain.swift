@@ -8,3 +8,10 @@
 import Foundation
 
 import Domain
+
+
+extension MusicAlbumEntity {
+    var domain: MusicAlbum {
+        .init(id: id, artworkURL: artworkURL, title: title, artistName: artistName)
+    }
+}

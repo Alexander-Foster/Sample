@@ -9,5 +9,5 @@ import Foundation
 
 
 public protocol RepositoryBuilder {
-    var repository: Repository { get }
+    var musicRepository: MusicRepository { get }
 }
