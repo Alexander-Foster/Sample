@@ -48,6 +48,10 @@ public extension DetailViewModel {
     var title: String {
         album?.title ?? ""
     }
+
+    var albumId: String {
+        album?.id ?? ""
+    }
 }
 
 // MARK: - Private function
@@ -63,5 +67,9 @@ private extension DetailViewModel {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    func fetchAlbumTrack() -> [Track] {
+        return []
     }
 }

@@ -35,7 +35,23 @@ struct DetailScreen: View {
 
 // MARK: - Function
 extension DetailScreen {
+    func playAll() {
 
+            playerManager.play(albumId: viewModel.albumId, isShuffled: false)
+
+    }
+
+    func playShuffle() {
+//        Task {
+            playerManager.play(albumId: viewModel.albumId, isShuffled: true)
+//        }
+    }
+
+    func playTrack(with id: String) {
+//        Task {
+            playerManager.play(albumId: viewModel.albumId, trackId: id, isShuffled: true)
+//        }
+    }
 }
 
 // MARK: - UI
@@ -72,7 +88,7 @@ extension DetailScreen {
 
     // TODO: 버튼 스타일 with 디자인 시스템
     var playButton: some View {
-        Button(action: {}) {
+        Button(action: playAll) {
             Image(systemName: "play.fill")
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -81,7 +97,7 @@ extension DetailScreen {
     }
 
     var shuffleButton: some View {
-        Button(action: {}) {
+        Button(action: playShuffle) {
             Image(systemName: "shuffle")
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -118,13 +134,15 @@ extension DetailScreen {
 
     var trackList: some View {
         ForEach(viewModel.tracks) { track in
-            HStack {
-                Text("\(track.number ?? -1)")
-                Text(track.title)
-                Spacer()
+            Button(action: { playTrack(with: track.id) }) {
+                HStack {
+                    Text("\(track.number ?? -1)")
+                    Text(track.title)
+                    Spacer()
+                }
+                .padding()
+                .background(Color(.secondarySystemBackground))
             }
-            .padding()
-            .background(Color(.secondarySystemBackground))
         }
     }
 }
