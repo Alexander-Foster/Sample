@@ -9,10 +9,10 @@ import Foundation
 
 
 public struct MusicAlbum {
-    let id: String
-    let artworkURL: URL?
-    let title: String
-    let artistName: String
+    public let id: String
+    public let artworkURL: URL?
+    public let title: String
+    public let artistName: String
 
     public init(id: String, artworkURL: URL?, title: String, artistName: String) {
         self.id = id

@@ -21,7 +21,7 @@ public protocol MainDependency: Dependency {
 public final class MainComponent: Component<MainDependency>, MainBuilder {
 
     struct Component: MainViewModelDependency {
-
+        var getAllAlbumUseCase: GetAllAlbumUseCase
     }
 
 
@@ -31,7 +31,7 @@ public final class MainComponent: Component<MainDependency>, MainBuilder {
             MainScreen(
                 viewModel: MainViewModel(
                     dependency: Component(
-
+                        getAllAlbumUseCase: dependency.useCaseBuilder.getAllAlbumUseCase
                     )
                 )
             )

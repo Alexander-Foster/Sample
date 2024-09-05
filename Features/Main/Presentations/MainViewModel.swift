@@ -11,11 +11,13 @@ import Combine
 import Domain
 
 public protocol MainViewModelDependency {
-
+    var getAllAlbumUseCase: GetAllAlbumUseCase { get }
 }
 
 
 public final class MainViewModel: ObservableObject {
+
+    @Published public private(set) var albums: [Album] = []
 
     private let dependency: MainViewModelDependency
 
@@ -24,7 +26,7 @@ public final class MainViewModel: ObservableObject {
     }
 
     public enum Action {
-
+        case load
     }
 }
 
@@ -33,6 +35,8 @@ public extension MainViewModel {
     @MainActor
     func action(_ action: Action) {
         switch action {
+        case .load:
+            fetchAlbums()
         }
     }
 }
@@ -44,5 +48,14 @@ public extension MainViewModel {
 
 // MARK: - Private function
 private extension MainViewModel {
-    
+    @MainActor
+    func fetchAlbums() {
+        Task {
+            do {
+                self.albums = try await dependency.getAllAlbumUseCase()?.map(\.presentation) ?? []
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
