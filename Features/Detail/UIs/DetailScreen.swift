@@ -49,7 +49,7 @@ extension DetailScreen {
 
     func playTrack(with id: String) {
 //        Task {
-            playerManager.play(albumId: viewModel.albumId, trackId: id, isShuffled: true)
+            playerManager.play(albumId: viewModel.albumId, trackId: id, isShuffled: false)
 //        }
     }
 }

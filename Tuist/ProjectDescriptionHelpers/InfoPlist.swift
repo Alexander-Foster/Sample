@@ -36,7 +36,7 @@ extension InfoPlist {
             "NSLocationWhenInUseUsageDescription": "We need your location to provide better service.",
             "NSLocationAlwaysUsageDescription": "We need your location to provide better service.",
             "NSAppleMusicUsageDescription": "음악 라이브러리에 접근합니다.",
-            "UIBackgroundModes": ["fetch", "remote-notification"],
+            "UIBackgroundModes": ["fetch", "remote-notification", "audio"],
             "UILaunchStoryboardName": "LaunchScreen",
             "UIRequiredDeviceCapabilities": ["armv7"],
             "UISupportedInterfaceOrientations": [

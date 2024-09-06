@@ -9,6 +9,7 @@ import SwiftUI
 
 import MusicPlayControl
 import NeedleFoundation
+import AVFoundation
 
 
 @main
@@ -20,6 +21,7 @@ struct MainApp: App {
     init() {
         registerProviderFactories()
         rootComponent = RootComponent()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
 
     var body: some Scene {

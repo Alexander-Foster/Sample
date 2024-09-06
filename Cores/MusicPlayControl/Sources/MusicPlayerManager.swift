@@ -14,6 +14,7 @@ public final actor MusicPlayerManager: ObservableObject {
 
     @Published @MainActor public private(set) var isPlaying: Bool = false
 
+    @MainActor
     public init() {
         setupRemoteCommandCenter()
     }
@@ -35,6 +36,14 @@ public extension MusicPlayerManager {
     @MainActor var artworkURL: URL? {
         album?.artwork?.url(width: 200, height: 200)
     }
+
+    @MainActor var isShuffled: Bool {
+        player.state.shuffleMode == .songs
+    }
+
+    @MainActor var repeatMode: MusicKit.MusicPlayer.RepeatMode? {
+        player.state.repeatMode
+    }
 }
 
 public extension MusicPlayerManager {
@@ -43,15 +52,16 @@ public extension MusicPlayerManager {
         Task(priority: .high) {
             do {
                 try await fetchAlubumInfo(by: albumId)
-                var insertedTracks = isShuffled ? tracks.shuffled() : tracks
+                var selectedTrack: Track?
                 if let trackId {
-                    insertedTracks = tracks.filter({ $0.id.rawValue == trackId })
+                    selectedTrack = tracks.first(where: { $0.id.rawValue == trackId })
                 }
                 player.pause()
-                player.queue = ApplicationMusicPlayer.Queue(for: insertedTracks, startingAt: nil)
+                player.queue = ApplicationMusicPlayer.Queue(for: tracks, startingAt: selectedTrack)
                 try await player.prepareToPlay()
                 try await player.play()
                 updateNowPlayingInfo(with: player.queue.currentEntry)
+                player.state.shuffleMode = isShuffled ? .songs : .off
                 isPlaying = true
             } catch {
                 print(error.localizedDescription)
@@ -78,33 +88,58 @@ public extension MusicPlayerManager {
         isPlaying = false
     }
 
+    @MainActor
     func next() {
         Task {
             try await player.skipToNextEntry()
-            await updateNowPlayingInfo(with: player.queue.currentEntry)
+            try await Task.sleep(for: .seconds(1))
+            updateNowPlayingInfo(with: player.queue.currentEntry)
         }
     }
 
+    @MainActor
     func previous() {
         Task {
             try await player.skipToPreviousEntry()
-            await updateNowPlayingInfo(with: player.queue.currentEntry)
+            try await Task.sleep(for: .seconds(1))
+            updateNowPlayingInfo(with: player.queue.currentEntry)
         }
+    }
+
+    @MainActor
+    func toggleShuffled() {
+        player.state.shuffleMode = isShuffled ? .off : .songs
+        objectWillChange.send()
+    }
+
+    @MainActor
+    func toggleRepeatMode() {
+        switch player.state.repeatMode {
+        case .all:
+            player.state.repeatMode = .none
+        case .one:
+            player.state.repeatMode = .all
+        default:
+            player.state.repeatMode = .one
+        }
+        objectWillChange.send()
     }
 }
 
 private extension MusicPlayerManager {
 
-    nonisolated func setupRemoteCommandCenter() {
-        UIApplication.shared.beginReceivingRemoteControlEvents()
+    @MainActor
+    func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
 
         commandCenter.playCommand.addTarget { [weak self] _ in
+            print("--woody--")
             self?.resume()
             return .success
         }
 
         commandCenter.pauseCommand.addTarget { [weak self] _ in
+            print("--woody-- pause")
             self?.pause()
             return .success
         }

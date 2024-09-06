@@ -29,15 +29,17 @@ struct MusicPlayerModal: View {
             HStack {
                 Spacer()
                 Button(action: {
-
+                    playerManager.toggleRepeatMode()
                 }) {
-                    Image(systemName: "repeat")
+                    Image(systemName: playerManager.repeatMode == .one ? "repeat.1" : "repeat")
+                        .tint(playerManager.repeatMode == nil ? .gray : .accentColor)
                 }
-                .disabled(true)
                 Spacer()
 
                 Button(action: {
-                    playerManager.previous()
+                    Task {
+                        await playerManager.previous()
+                    }
                 }) {
                     Image(systemName: "backward.fill")
                 }
@@ -45,19 +47,23 @@ struct MusicPlayerModal: View {
                 Button(action: {
                     playerManager.isPlaying ? playerManager.pause() : playerManager.resume()
                 }) {
-                    Image(systemName: "play.fill")
+                    Image(systemName: playerManager.isPlaying ? "pause.fill" : "play.fill")
                 }
                 Spacer()
                 Button(action: {
-                    playerManager.next()
+                    Task {
+                        await playerManager.next()
+                    }
                 }) {
                     Image(systemName: "forward.fill")
                 }
                 Spacer()
-                Button(action: {}) {
+                Button(action: {
+                    playerManager.toggleShuffled()
+                }) {
                     Image(systemName: "shuffle")
+                        .tint(playerManager.isShuffled ? .accentColor : .gray)
                 }
-                .disabled(true)
                 Spacer()
             }
         }
