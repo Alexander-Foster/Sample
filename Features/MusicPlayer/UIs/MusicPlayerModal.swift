@@ -66,6 +66,17 @@ struct MusicPlayerModal: View {
                 }
                 Spacer()
             }
+
+            VolumeView()
+                .frame(height: 50)
+                .padding()
+
+
+            Slider(value: Binding(get: {
+                playerManager.currentTime / (playerManager.duration == 0 ? 1 : playerManager.duration)
+            }, set: { _ in }),
+                   in: 0...1)
+            .padding()
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -84,5 +95,19 @@ struct MusicPlayerModal: View {
                 .frame(width: 400, height: 400)
         }
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+import MediaPlayer
+
+struct VolumeView: UIViewRepresentable {
+    func makeUIView(context: Context) -> MPVolumeView {
+        let volumeView = MPVolumeView(frame: .zero)
+        volumeView.showsVolumeSlider = true
+        return volumeView
+    }
+
+    func updateUIView(_ uiView: MPVolumeView, context: Context) {
+
     }
 }

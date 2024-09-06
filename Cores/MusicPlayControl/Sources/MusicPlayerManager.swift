@@ -11,6 +11,7 @@ import MusicKit
 
 public final actor MusicPlayerManager: ObservableObject {
     @MainActor private let player = ApplicationMusicPlayer.shared
+    private var timer: Timer?
 
     @Published @MainActor public private(set) var isPlaying: Bool = false
 
@@ -21,6 +22,8 @@ public final actor MusicPlayerManager: ObservableObject {
 
     @Published @MainActor public private(set) var album: Album?
     @Published @MainActor public private(set) var currentTrack: Track?
+    @Published @MainActor public var currentTime: TimeInterval = 0.0
+    @Published @MainActor public var duration: TimeInterval = 0.0
     @MainActor private var tracks: [Track] = []
 }
 
@@ -63,6 +66,7 @@ public extension MusicPlayerManager {
                 updateNowPlayingInfo(with: player.queue.currentEntry)
                 player.state.shuffleMode = isShuffled ? .songs : .off
                 isPlaying = true
+                await setupTimer()
             } catch {
                 print(error.localizedDescription)
             }
@@ -75,6 +79,7 @@ public extension MusicPlayerManager {
         Task {
             do {
                 try await player.play()
+                await setupTimer()
                 isPlaying = true
             } catch {
                 print(error.localizedDescription)
@@ -84,8 +89,11 @@ public extension MusicPlayerManager {
 
     @MainActor
     func pause() {
-        player.pause()
-        isPlaying = false
+        Task {
+            player.pause()
+            isPlaying = false
+            await stopTimer()
+        }
     }
 
     @MainActor
@@ -176,6 +184,23 @@ private extension MusicPlayerManager {
         let tracks = try await album.with(.tracks).tracks
         self.album = album
         self.tracks = tracks?.map { $0 } ?? []
+    }
+
+    private func setupTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.updateProgress()
+        }
+    }
+
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    @MainActor
+    private func updateProgress() {
+        currentTime = player.playbackTime
+        duration = currentTrack?.duration ?? 0
     }
 }
 
